@@ -20,15 +20,17 @@ export default function AppNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Profile",
-      href: "/profile",
-    },
+    { label: "Home", href: "/" },
+    { label: "Profile", href: "/profile" },
+    
+      {
+    label: "Users",
+    href: "/users",
+  }
+  
+  
   ];
+ 
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
