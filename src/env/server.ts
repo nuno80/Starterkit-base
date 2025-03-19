@@ -4,6 +4,10 @@ import { ZodError, z } from "zod";
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]),
+    CLERK_SECRET_KEY: z.string().min(1),
+  },
+  client: {
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
   },
   onValidationError: (error: ZodError) => {
     console.error(
@@ -14,5 +18,8 @@ export const env = createEnv({
   },
   emptyStringAsUndefined: true,
   // eslint-disable-next-line n/no-process-env
-  experimental__runtimeEnv: process.env,
+  experimental__runtimeEnv: {
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+  },
 });

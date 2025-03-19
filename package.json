@@ -10,6 +10,7 @@
     "format": "prettier src/ --write"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.12.5",
     "@nextui-org/react": "^2.6.10",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tabler/icons-react": "^3.26.0",

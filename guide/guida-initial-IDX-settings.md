@@ -1,19 +1,23 @@
 # Guida Setup Nuovo Progetto in Ambiente Linux
 
 ## 1. Crea un progetto IDX python
+
 Paython è la base di partenza ideale per ogni progetto.
 
 a.Cancella i seguenti file:
+
 - .gitignore;
 - main.py;
 - cartella 'src';
 - al file devserver.sh, cancella SOLO la linea 'python -m flask --app main run -p $PORT --debug'. Puoi anche aggiungere più comandi complessi, per esempio:
+
 ```bash
 #!/bin/sh
 source .venv/bin/activate
 cd drive-tutorial
 npm run dev    # avvia il server di sviluppo Next.js
 ```
+
 b. Modifica il file requirements.txt con quello che sereve (es. cnx flask).
 
 ## 2. sostituisci il file dev.nix con il seguente codice
@@ -56,11 +60,15 @@ b. Modifica il file requirements.txt con quello che sereve (es. cnx flask).
 ```
 
 ## 3. Creazione App Next.js con T3 Stack
+
 Creiamo una nuova applicazione utilizzando il template T3:
+
 ```bash
 pnpm create t3-app@latest
 ```
+
 Durante il processo di setup, dovrai:
+
 - Inserire il nome del progetto
 - Selezionare i pacchetti da includere
 - Scegliere il tipo di stile (Tailwind/CSS)
@@ -78,11 +86,13 @@ Hanno scopi diversi
 Ricorda di aggiungere entrambi i file .env ai rispettivi .gitignore per evitare di committare informazioni sensibili.
 
 Per avviare il server:
+
 ```bash
 pnpm run dev
 ```
 
 ## 4. Creazione Repository GitHub
+
 1. Accedi al tuo account GitHub
 2. Clicca su "New repository"
 3. Inserisci lo stesso nome utilizzato per l'app T3
@@ -96,17 +106,21 @@ Prima, vai nella directory dell'app Next.js.
 ```bash
 cd nome-app
 ```
+
 Verifica che sei nella directory corretta (dovrebbe mostrare il percorso che termina con /drive-tutorial):
 
 ```bash
 pwd
 ```
+
 Se c'è già una cartella .git, rimuovila per sicurezza:
 
 ```bash
 rm -rf .git
 ```
-# file di configurazione per GitHub Actions 'ci.yaml'. 
+
+# file di configurazione per GitHub Actions 'ci.yaml'.
+
 Crea una cartella ".github/workflow" all'interno della cartella principale del progetto (ex. drive-tutorial) e crea al suo interno un file 'ci.yaml'.
 Questo workflow serve a:
 Verificare automaticamente la qualità del codice ad ogni push
@@ -143,6 +157,7 @@ jobs:
 ```
 
 Inizializza il nuovo repository e aggiungi i file:
+
 ```bash
 
 git init
@@ -156,6 +171,7 @@ git branch -M main
 git push -u origin main
 
 ```
+
 Ora la tua app Next.js sarà nel repository GitHub come progetto standalone.
 Quando esegui i comandi git dalla cartella nome-appl, solo i file all'interno di quella cartella verranno tracciati e pushati su GitHub.
 In pratica:
@@ -170,22 +186,27 @@ O spostarli dentro drive-tutorial
 O creare un repository Git separato nella directory principale
 
 ## 6. Installazione Aider
+
 # Installa Aider nella cartella dell'App utilizzando pip:
+
 ```bash
-python -m pip install aider-install 
+python -m pip install aider-install
 aider-install
 python -m pip install -U aider-chat
 aider --list-models gemini/
 ```
+
 riavvia il terminal a fine istallazione.
 
 # crea un file .env (solo per aider)
+
 GEMINI_API_KEY=xxxxxxxxx
 
 # Configura Aider
-Crea un file `.aider.conf.yml` nella root del progetto:
-```yaml
 
+Crea un file `.aider.conf.yml` nella root del progetto:
+
+```yaml
 ##########
 # options:
 
@@ -197,19 +218,21 @@ Main model: gemini/gemini-2.0-flash-exp
 
 ## Specify the model to use for the main chat
 model: gemini/gemini-2.0-flash-exp
-
 ```
+
 # Avvia aider dopo aver settato git (altrimenti imposta dei git init indesiderati)
 
-
 ## Note Importanti
+
 - Assicurati di avere Python e pip installati nel sistema
 - Verifica che git sia configurato correttamente con le tue credenziali
 - Ricorda di aggiungere il file `.env` al `.gitignore`
 - Non committare mai le chiavi API o altri dati sensibili
 
 ## Verifica Installazione
+
 Per verificare che tutto sia installato correttamente:
+
 ```bash
 pnpm --version
 aider --version
@@ -219,6 +242,7 @@ git --version
 # Git: guida ai Comandi Principali
 
 ## Visualizzare i Commit
+
 ```bash
 git log                    # Mostra la storia dei commit dettagliata
 git log --oneline         # Mostra una versione compatta dei commit
@@ -226,13 +250,16 @@ git show [commit-hash]    # Mostra i dettagli di un commit specifico
 ```
 
 ## Quando Fare un Commit
+
 È buona pratica fare un commit quando:
+
 - Hai completato una feature
 - Hai fatto una modifica significativa
 - Hai risolto un bug
 - Hai raggiunto un punto stabile del codice
 
 ## Come Fare un Nuovo Commit
+
 ```bash
 git add .                               # Aggiunge tutte le modifiche
 git add nomefile                        # Aggiunge un file specifico
@@ -241,6 +268,7 @@ git push                               # Invia i commit al repository remoto
 ```
 
 ## Tornare a un Commit Precedente
+
 ```bash
 # Per vedere i file senza modificare il branch
 git checkout [commit-hash]
@@ -253,15 +281,18 @@ git reset --hard [commit-hash]
 ```
 
 ## Best Practices per i Commit
+
 1. Fai commit piccoli e frequenti
 2. Usa messaggi descrittivi (es: "Aggiunta validazione form login")
 3. Ogni commit dovrebbe rappresentare una modifica logica completa
 4. Prima di ogni commit, verifica le modifiche con `git status`
 
 ## Branch in Git
+
 Un branch è una linea di sviluppo indipendente che si dirama dal codice principale.
 
 ### Comandi Principali per i Branch
+
 ```bash
 # Vedere tutti i branch
 git branch
@@ -286,6 +317,7 @@ git branch -d nome-branch
 ```
 
 ### Esempio di Struttura Branch per Next.js
+
 ```bash
 main
 ├── develop
@@ -302,15 +334,19 @@ main
 ```
 
 ### Spiegazione dei Branch
+
 1. `main`
+
    - Branch principale di produzione
    - Contiene solo codice stabile e testato
 
 2. `develop`
+
    - Branch di sviluppo principale
    - Qui confluiscono tutte le nuove feature
 
 3. `feature/*`
+
    - Branch per nuove funzionalità
    - Esempi:
      - `feature/auth` per il sistema di autenticazione
@@ -318,6 +354,7 @@ main
      - `feature/api-integration` per integrazioni API
 
 4. `bugfix/*`
+
    - Branch per correzioni di bug
    - Es: `bugfix/performance` per problemi di performance
 
@@ -326,6 +363,7 @@ main
    - Es: `release/v1.0.0` per la versione 1.0.0
 
 ### Workflow Tipico
+
 1. Crea branch da `develop`: `git checkout -b feature/login develop`
 2. Sviluppa la feature
 3. Merge in `develop`: `git checkout develop && git merge feature/login`
@@ -333,6 +371,7 @@ main
 5. Merge in `main` per il rilascio
 
 ### Best Practices per i Branch
+
 - Usa nomi descrittivi (es: "feature/login", "bugfix/header")
 - Mantieni i branch aggiornati con il main
 - Elimina i branch dopo averli uniti al main

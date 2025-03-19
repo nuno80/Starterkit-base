@@ -9,6 +9,7 @@ mkdir -p src/db
 mkdir -p drizzle
 touch src/db/schema.ts src/index.ts .env drizzle.config.ts tsconfig.json package.json
 ```
+
 ```
 📦 <project root>
  ├ 📂 drizzle
@@ -40,12 +41,12 @@ touch src/db/schema.ts src/index.ts .env drizzle.config.ts tsconfig.json package
 3.  **Connessione al Database (`src/index.ts`):**
 
     ```typescript
-    import 'dotenv/config';
-    import { drizzle } from 'drizzle-orm/better-sqlite3';
-    import Database from 'better-sqlite3';
+    import Database from "better-sqlite3";
+    import "dotenv/config";
+    import { drizzle } from "drizzle-orm/better-sqlite3";
 
     // Inizializzazione con istanza Database (consigliato):
-    const sqlite = new Database('sqlite.db'); // o il nome del tuo file
+    const sqlite = new Database("sqlite.db"); // o il nome del tuo file
     const db = drizzle(sqlite);
 
     export { db };
@@ -67,58 +68,56 @@ touch src/db/schema.ts src/index.ts .env drizzle.config.ts tsconfig.json package
 5.  **Configurazione Drizzle Kit (`drizzle.config.ts`):**
 
     ```typescript
-    import 'dotenv/config';
-    import { defineConfig } from 'drizzle-kit';
+    import "dotenv/config";
+    import { defineConfig } from "drizzle-kit";
 
     export default defineConfig({
-      out: './drizzle',
-      schema: './src/db/schema.ts',
-      dialect: 'sqlite',
+      out: "./drizzle",
+      schema: "./src/db/schema.ts",
+      dialect: "sqlite",
       dbCredentials: {
-          url: process.env.DATABASE_URL!,
+        url: process.env.DATABASE_URL!,
       },
     });
     ```
 
 6.  **Applicazione delle Modifiche allo Schema:**
 
-    *   Sviluppo (push): `npx drizzle-kit push`
-    *   Migrazioni (generate + migrate): `npx drizzle-kit generate`, poi `npx drizzle-kit migrate`
+    - Sviluppo (push): `npx drizzle-kit push`
+    - Migrazioni (generate + migrate): `npx drizzle-kit generate`, poi `npx drizzle-kit migrate`
 
 7.  **Esempio di Query (`src/index.ts`):**
 
     ```typescript
     // ... (codice precedente da src/index.ts: import, connessione) ...
-    import { eq } from 'drizzle-orm';
+    import { eq } from "drizzle-orm";
 
     async function main() {
-        const user: typeof usersTable.$inferInsert = {
-            name: 'John',
-            age: 30,
-            email: 'john@example.com',
-        };
-        try {
-            await db.insert(usersTable).values(user);
-            console.log('New user created!');
+      const user: typeof usersTable.$inferInsert = {
+        name: "John",
+        age: 30,
+        email: "john@example.com",
+      };
+      try {
+        await db.insert(usersTable).values(user);
+        console.log("New user created!");
 
-            const users = await db.select().from(usersTable);
-            console.log('Getting all users: ', users);
+        const users = await db.select().from(usersTable);
+        console.log("Getting all users: ", users);
 
-            await db
-                .update(usersTable)
-                .set({ age: 31 })
-                .where(eq(usersTable.email, user.email));
-            console.log('User updated!');
+        await db
+          .update(usersTable)
+          .set({ age: 31 })
+          .where(eq(usersTable.email, user.email));
+        console.log("User updated!");
 
-            await db.delete(usersTable).where(eq(usersTable.email, user.email));
-            console.log('User deleted!');
-
-        } catch (error) {
-            console.error("Errore:", error);
-        }
+        await db.delete(usersTable).where(eq(usersTable.email, user.email));
+        console.log("User deleted!");
+      } catch (error) {
+        console.error("Errore:", error);
+      }
     }
     main();
-
     ```
 
 8.  **Esecuzione dello Script:**
@@ -126,9 +125,9 @@ touch src/db/schema.ts src/index.ts .env drizzle.config.ts tsconfig.json package
     ```bash
     bun tsx src/index.ts
     ```
+
     oppure
+
     ```
     bun src/index.ts
     ```
-
-

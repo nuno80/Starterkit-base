@@ -1,5 +1,6 @@
 "use client";
 
+import { SignInButton, SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
 import React from "react";
 
 import {
@@ -22,15 +23,12 @@ export default function AppNavbar() {
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Profile", href: "/profile" },
-    
-      {
-    label: "Users",
-    href: "/users",
-  }
-  
-  
+
+    {
+      label: "Users",
+      href: "/users",
+    },
   ];
- 
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -55,6 +53,15 @@ export default function AppNavbar() {
         ))}
         <NavbarItem>
           <ThemeSwitcher />
+        </NavbarItem>
+        <NavbarItem>
+          <SignedOut>
+            <SignInButton />
+            <SignUpButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>

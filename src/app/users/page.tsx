@@ -10,7 +10,7 @@ export default async function UsersPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Users</h1>
+      <h1 className="mb-6 text-3xl font-bold">Users</h1>
       <UserList users={users} />
     </div>
   );

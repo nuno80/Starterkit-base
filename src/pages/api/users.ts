@@ -1,5 +1,6 @@
 // pages/api/users.ts
 import { NextApiRequest, NextApiResponse } from "next";
+
 import { getAllUsers, insertUser } from "../../lib/database";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -19,8 +19,8 @@ A basic Next.js starter.
 
 Trattandosi di uno starter kit ogni volta che inizi un nuovo progetto DEVI creare una nuova repository in github!
 
-
 ## Creazione Repository GitHub
+
 1. Accedi al tuo account GitHub
 2. Clicca su "New repository"
 3. Inserisci lo stesso nome utilizzato per l'app T3
@@ -34,6 +34,7 @@ Prima, vai nella directory dell'app Next.js.
 ```bash
 cd nome-app
 ```
+
 Verifica che sei nella directory corretta (dovrebbe mostrare il percorso che termina con /drive-tutorial):
 
 ```bash
@@ -45,7 +46,9 @@ Se c'è già una cartella .git, rimuovila per sicurezza con il seguente comando:
 ```bash
 rm -rf .git
 ```
-## file di configurazione per GitHub Actions 'ci.yaml'. 
+
+## file di configurazione per GitHub Actions 'ci.yaml'.
+
 Crea una cartella ".github/workflow" all'interno della cartella principale del progetto (ex. drive-tutorial) e crea al suo interno un file 'ci.yaml'.
 Questo workflow serve a:
 Verificare automaticamente la qualità del codice ad ogni push
@@ -82,6 +85,7 @@ jobs:
 ```
 
 Inizializza il nuovo repository e aggiungi i file:
+
 ```bash
 
 git init
@@ -90,7 +94,7 @@ git commit -m "Initial commit"
 
 #Collega il repository remoto e fai il push:
 
-git remote add origin https://github.com/nuno80/next-start-nuno.git 
+git remote add origin https://github.com/nuno80/next-start-nuno.git
 //serve solo per il primo collegamento a github
 
 git branch -M main
@@ -189,6 +193,7 @@ docker compose up
 ```sh
 pnpm run db:migrate
 ```
+
 Per applicare le modifiche il DB docker deve essere running!
 
 6. Start the app:
@@ -204,17 +209,21 @@ pnpm run dev
 - [Bulletproof React](https://github.com/alan2207/bulletproof-react)
 
 ## script prettier
+
 All'interno del file packege.json è stata inserita la seguente linea:
-  "scripts": {
-    "format": "prettier src/ --write",
+"scripts": {
+"format": "prettier src/ --write",
 
 Se esegui:
+
 ```sh
 npm run format
 ```
+
 Tutto ciò che dentro la cartella src verrà formattato correttamente!
 
 ## .prettierrc.json
+
 Non potendo inserire commenti in un file JSON li ho inseriti di seguito.
 
 ```sh
@@ -226,8 +235,8 @@ Non potendo inserire commenti in un file JSON li ho inseriti di seguito.
   "importOrder": [ // Definisce l'ordine delle importazioni per mantenere il codice ordinato nel seguente ordine:
     "^(react|next?/?([a-zA-Z/]*))$", // 1°: tutto ciò che è riferito a React e Next.js è ordinato per primo
     "<THIRD_PARTY_MODULES>",         // 2°: Librerie di terze parti (installate tramite npm/yarn).
-    "^@/(.*)$",                      // 3°: Importazioni assolute che iniziano con @/ 
-    
+    "^@/(.*)$",                      // 3°: Importazioni assolute che iniziano con @/
+
     Immagina di avere un componente molto annidato, tipo: src/components/forms/inputs/special/MySpecialInput.tsx. Se da questo componente vuoi importare un'utility che si trova in src/utils/myUtil.ts, con i percorsi relativi dovresti scrivere:
     import myUtil from '../../../../utils/myUtil';
     Use code with caution.
@@ -236,7 +245,7 @@ Non potendo inserire commenti in un file JSON li ho inseriti di seguito.
     Importazioni assolute come soluzione: Con le importazioni assolute, invece, puoi scrivere semplicemente:
     import myUtil from '@/utils/myUtil';
 
-    "^[./]"                         // 4°: Importazioni relative che iniziano con ./ o ../ 
+    "^[./]"                         // 4°: Importazioni relative che iniziano con ./ o ../
   ],
   "importOrderSeparation": true, // Inserisce una riga vuota tra i gruppi di importazioni.
   "importOrderSortSpecifiers": true, // Ordina alfabeticamente gli identificatori all'interno di ogni importazione.
@@ -248,16 +257,15 @@ Non potendo inserire commenti in un file JSON li ho inseriti di seguito.
 
 ```
 
-## .eslintrc.json 
+## .eslintrc.json
 
-naming convenctions: 
+naming convenctions:
 Tutti i file .ts e .tsx devono essere in KEBAB_CASE (es. mio-componente.tsx).
 Tutte le cartelle dentro src/ (esclusi i file nascosti) devono essere in KEBAB_CASE.
 
-
 ```sh
 {
-  "extends": ["next/core-web-vitals", "next", "prettier"], 
+  "extends": ["next/core-web-vitals", "next", "prettier"],
   // Aggiunge configurazioni di base:
   // - next/core-web-vitals: Regole per le Core Web Vitals di Next.js.
   // - next/typescript:     Regole specifiche per TypeScript in Next.js.
@@ -273,13 +281,13 @@ Tutte le cartelle dentro src/ (esclusi i file nascosti) devono essere in KEBAB_C
     "prefer-arrow-callback": ["error"],
     // Richiede l'uso di arrow function come callback.
 
-    "prefer-template": ["error"],    
+    "prefer-template": ["error"],
     // Richiede l'uso di template literal invece della concatenazione di stringhe.
 
     "semi": ["error"],
     // Richiede i punti e virgola alla fine delle istruzioni.
 
-    "quotes": ["error", "double"],    
+    "quotes": ["error", "double"],
     // Richiede l'uso di apici doppi per le stringhe.
 
     "n/no-process-env": ["error"],
@@ -312,4 +320,3 @@ Tutti i gli errori vengono salvati in automatico ad ogni salvataggio oppure con:
 shift + alt + . per eslint auto fix, ovvero applicare le regole di cui sopra in automatico!
 
 ```
-

@@ -42,9 +42,9 @@ Crea una cartella `lib` nella root del progetto e aggiungi un file `database.ts`
 
 ```typescript
 // lib/database.ts
-import Database from 'better-sqlite3';
+import Database from "better-sqlite3";
 
-const db = new Database('mydatabase.db');
+const db = new Database("mydatabase.db");
 
 // Crea la tabella utenti (se non esiste già)
 db.exec(`
@@ -64,26 +64,26 @@ export interface User {
 
 // Funzione per ottenere tutti gli utenti
 export function getAllUsers(): User[] {
-  const stmt = db.prepare('SELECT * FROM users');
+  const stmt = db.prepare("SELECT * FROM users");
   return stmt.all() as User[];
 }
 
 // Funzione per inserire un nuovo utente
 export function insertUser(name: string, email: string): { id: number } {
-  const stmt = db.prepare('INSERT INTO users (name, email) VALUES (?, ?)');
+  const stmt = db.prepare("INSERT INTO users (name, email) VALUES (?, ?)");
   const result = stmt.run(name, email);
   return { id: result.lastInsertRowid as number };
 }
 
 // Funzione per ottenere un utente per ID
 export function getUserById(id: number): User | undefined {
-  const stmt = db.prepare('SELECT * FROM users WHERE id = ?');
+  const stmt = db.prepare("SELECT * FROM users WHERE id = ?");
   return stmt.get(id) as User | undefined;
 }
 
 // Funzione per eliminare un utente per ID
 export function deleteUserById(id: number): void {
-  const stmt = db.prepare('DELETE FROM users WHERE id = ?');
+  const stmt = db.prepare("DELETE FROM users WHERE id = ?");
   stmt.run(id);
 }
 ```
@@ -98,27 +98,28 @@ Crea un'API route per gestire le richieste relative agli utenti:
 
 ```typescript
 // pages/api/users.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getAllUsers, insertUser, User } from '../../lib/database';
+import { NextApiRequest, NextApiResponse } from "next";
+
+import { User, getAllUsers, insertUser } from "../../lib/database";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     const users = getAllUsers();
     res.status(200).json(users);
-  } else if (req.method === 'POST') {
+  } else if (req.method === "POST") {
     const { name, email } = req.body;
     if (!name || !email) {
-      return res.status(400).json({ error: 'Name and email are required' });
+      return res.status(400).json({ error: "Name and email are required" });
     }
 
     try {
       const result = insertUser(name, email);
       res.status(201).json({ id: result.id });
     } catch (error) {
-      res.status(500).json({ error: 'Failed to insert user' });
+      res.status(500).json({ error: "Failed to insert user" });
     }
   } else {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: "Method not allowed" });
   }
 }
 ```
@@ -133,9 +134,10 @@ Crea una pagina per visualizzare l'elenco degli utenti:
 
 ```tsx
 // pages/users.tsx
-import { NextPage } from 'next';
-import UserList from '../components/user-list';
-import { User } from '../lib/database';
+import { NextPage } from "next";
+
+import UserList from "../components/user-list";
+import { User } from "../lib/database";
 
 interface UsersPageProps {
   users: User[];
@@ -144,7 +146,7 @@ interface UsersPageProps {
 const UsersPage: NextPage<UsersPageProps> = ({ users }) => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Users</h1>
+      <h1 className="mb-6 text-3xl font-bold">Users</h1>
       <UserList users={users} />
     </div>
   );
@@ -155,7 +157,7 @@ export default UsersPage;
 // Fetch dei dati lato server
 export async function getServerSideProps() {
   try {
-    const { getAllUsers } = await import('../lib/database');
+    const { getAllUsers } = await import("../lib/database");
     const users = getAllUsers();
 
     return {
@@ -164,7 +166,7 @@ export async function getServerSideProps() {
       },
     };
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error("Error fetching users:", error);
     return {
       props: {
         users: [],
@@ -180,7 +182,7 @@ Crea un componente per visualizzare l'elenco degli utenti:
 
 ```tsx
 // components/user-list.tsx
-import { User } from '../lib/database';
+import { User } from "../lib/database";
 
 interface UserListProps {
   users: User[];
@@ -189,10 +191,10 @@ interface UserListProps {
 export default function UserList({ users }: UserListProps) {
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">User List</h2>
+      <h2 className="mb-4 text-2xl font-bold">User List</h2>
       <ul>
         {users.map((user) => (
-          <li key={user.id} className="mb-2 p-2 border rounded">
+          <li key={user.id} className="mb-2 rounded border p-2">
             <p className="font-semibold">{user.name}</p>
             <p className="text-gray-600">{user.email}</p>
           </li>
@@ -256,6 +258,3 @@ my-nextjs-app/
 ```
 
 ---
-
-
-
